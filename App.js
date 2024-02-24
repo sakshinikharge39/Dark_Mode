@@ -13,13 +13,11 @@ export default function App(){
   const [darkMode, setDarkMode] = useState(false)
 
   useEffect(() => {
-    console.log();
-    const listener = EventRegister.addEventListener('changeTheme', (data) => {
+    const listener = EventRegister.addEventListener('ChangeTheme', (data) => {
       setDarkMode(data)
-      console.log(darkMode);
+      console.log(data);
     })
-    console.log(darkMode, "runnning");
-    return ()=> {
+    return () => {
       EventRegister.removeAllListeners(listener)
     }
   }, [darkMode])

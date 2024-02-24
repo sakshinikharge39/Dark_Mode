@@ -10,10 +10,8 @@ const Home = () => {
       <Switch 
       value={darkMode}
       onValueChange={(value) => { 
-        return ( 
-            setDarkMode(value)
-        // EventRegister.emit('ChangeTheme', value)
-        )
+        setDarkMode(value);
+        EventRegister.emit('ChangeTheme', value)
       }}
       />
     </View>
