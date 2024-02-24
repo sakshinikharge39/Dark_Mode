@@ -1,20 +1,38 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import Home from './screens/Home';
+import Profile from './screens/Profile';
+import { EventRegister } from 'react-native-event-listeners'
+import React , { useState } from 'react';
+import { useEffect } from 'react';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+
+const Tab = createMaterialBottomTabNavigator();
+
+export default function App(){
+  const [darkMode, setDarkMode] = useState(false)
+
+  useEffect(() => {
+    console.log();
+    const listener = EventRegister.addEventListener('changeTheme', (data) => {
+      setDarkMode(data)
+      console.log(darkMode);
+    })
+    console.log(darkMode, "runnning");
+    return ()=> {
+      EventRegister.removeAllListeners(listener)
+    }
+  }, [darkMode])
+  return(
+    <NavigationContainer>
+      <Tab.Navigator>
+      <Tab.Screen name='Home' component={Home}/>
+      <Tab.Screen name='Profile' component={Profile} />
+      </Tab.Navigator>
+    </NavigationContainer>
+  )
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
+
+
