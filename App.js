@@ -1,35 +1,27 @@
+
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import Home from './screens/Home';
-import Profile from './screens/Profile';
-import { EventRegister } from 'react-native-event-listeners'
-import React , { useState } from 'react';
-import { useEffect } from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
+import { DarkModeProvider } from './DarkModeContext';
+import HomeScreen from './screens/HomeScreen';
+import OtherScreen from './screens/OtherScreen';
 
+const Stack = createStackNavigator();
 
-const Tab = createMaterialBottomTabNavigator();
+const App = () => {
+  return (
+    <DarkModeProvider>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="Other" component={OtherScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </DarkModeProvider>
+  );
+};
 
-export default function App(){
-  const [darkMode, setDarkMode] = useState(false)
-
-  useEffect(() => {
-    const listener = EventRegister.addEventListener('ChangeTheme', (data) => {
-      setDarkMode(data)
-      console.log(data);
-    })
-    return () => {
-      EventRegister.removeAllListeners(listener)
-    }
-  }, [darkMode])
-  return(
-    <NavigationContainer>
-      <Tab.Navigator>
-      <Tab.Screen name='Home' component={Home}/>
-      <Tab.Screen name='Profile' component={Profile} />
-      </Tab.Navigator>
-    </NavigationContainer>
-  )
-}
+export default App;
 
 
 
